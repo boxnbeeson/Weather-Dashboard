@@ -1,9 +1,9 @@
 $(document).ready(function() {
   $("#search-button").on("click", function() {
     var searchValue = $("#search-value").val();
-
+    console.log(searchValue);
     // clear input box
-
+    $("#search-value").val('');
     searchWeather(searchValue);
   });
 
@@ -18,9 +18,8 @@ $(document).ready(function() {
 
   function searchWeather(searchValue) {
     $.ajax({
-      type: "",
-      url: "" + searchValue + "",
-      dataType: "json",
+      method: "GET",
+      url: "http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         // create history link for this search
         if (history.indexOf(searchValue) === -1) {
@@ -31,9 +30,11 @@ $(document).ready(function() {
         }
         
         // clear any old content
-
+        $("#today").val('');
+        $("#forecast").val('');
         // create html content for current weather
-
+        $("#today").html("hello");
+        $("#forecast").html("yoyo");
         // merge and add to page
         
         // call follow-up api endpoints
@@ -46,7 +47,7 @@ $(document).ready(function() {
   function getForecast(searchValue) {
     $.ajax({
       type: "",
-      url: "" + searchValue + "",
+      url: "api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       dataType: "json",
       success: function(data) {
         // overwrite any existing content with title and empty row
@@ -68,7 +69,7 @@ $(document).ready(function() {
   function getUVIndex(lat, lon) {
     $.ajax({
       type: "",
-      url: "" + lat + "&lon=" + lon,
+      url: "api.openweathermap.org/data/2.5/forecast?q=" + lat + "&lon=" + lon,
       dataType: "json",
       success: function(data) {
         var uv = $("<p>").text("UV Index: ");
