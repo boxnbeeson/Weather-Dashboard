@@ -11,43 +11,63 @@ $(document).ready(function() {
     searchWeather($(this).text());
   });
 
+  $("#clear-history").on("click", function() {
+    localStorage.clear();
+    window.location.reload();
+  });
+
+// makes history box
   function makeRow(text) {
     var li = $("<li>").addClass("list-group-item list-group-item-action").text(text);
     $(".history").append(li);
   }
 
-  function searchWeather(searchValue) {
+  function searchWeather(cityName) {
     $.ajax({
       method: "GET",
-      url: "http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
+      url: "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         // create history link for this search
-        if (history.indexOf(searchValue) === -1) {
-          history.push(searchValue);
+        if (history.indexOf(cityName.toLowerCase()) === -1) {
+          history.push(cityName.toLowerCase());
           window.localStorage.setItem("history", JSON.stringify(history));
     
-          makeRow(searchValue);
+          makeRow(cityName);
         }
         
         // clear any old content
         $("#today").val('');
         $("#forecast").val('');
         // create html content for current weather
-        $("#today").html("hello");
-        $("#forecast").html("yoyo");
+        $("#today").html(
+          "<h3>" + cityName + " " + "(" + today + ")" + " INSERT WEATHER ICON HERE" + "</h3>" + 
+          "<p>" +
+          "Temperature: " + data.main.temp +
+          "</p>" +
+          "<p>" +
+          "Humidity: " + data.main.humidity +
+          "</p>" +
+          "<p>" +
+          "Wind Speed: " + data.wind.speed + "MPH" +
+          "</p>" +
+          "<p>" +
+          "UV Index: " + "INSERT UV INDEX GATHERING CODE HERE" +
+          "</p>" 
+        );
         // merge and add to page
         
         // call follow-up api endpoints
-        getForecast(searchValue);
+        getForecast(cityName);
         getUVIndex(data.coord.lat, data.coord.lon);
+        console.log(data.coord.lat, data.coord.lon);
       }
     });
   }
   
-  function getForecast(searchValue) {
+  function getForecast(cityName) {
     $.ajax({
       type: "",
-      url: "api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
+      url: "api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       dataType: "json",
       success: function(data) {
         // overwrite any existing content with title and empty row
@@ -93,3 +113,12 @@ $(document).ready(function() {
     makeRow(history[i]);
   }
 });
+
+
+//code for gathering date for current day
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = mm + '/' + dd + '/' + yyyy;
