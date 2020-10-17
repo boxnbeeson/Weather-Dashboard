@@ -40,7 +40,7 @@ $(document).ready(function() {
         $("#forecast").val('');
         // create html content for current weather
         $("#today").html(
-          "<h3>" + cityName + " " + "(" + today + ")" + " INSERT WEATHER ICON HERE" + "</h3>" + 
+          "<h3>" + cityName + " " + "(" + today + ") " + "<img src=" + weatherIcon + '>' + "</h3>" + 
           "<p>" +
           "Temperature: " + data.main.temp +
           "</p>" +
@@ -50,25 +50,26 @@ $(document).ready(function() {
           "<p>" +
           "Wind Speed: " + data.wind.speed + "MPH" +
           "</p>" +
-          "<p>" +
-          "UV Index: " + "INSERT UV INDEX GATHERING CODE HERE" +
-          "</p>" 
+          '<div class="UVbutton">' + "</div>"
         );
         // merge and add to page
         
         // call follow-up api endpoints
         getForecast(cityName);
         getUVIndex(data.coord.lat, data.coord.lon);
-        console.log(data.coord.lat, data.coord.lon);
+        console.log(JSON.stringify(data.weather[0].main));
+        console.log(JSON.stringify(data));
+        var weatherIcon = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+        console.log(weatherIcon);
+        console.log(data.weather[0].icon);
       }
     });
   }
   
   function getForecast(cityName) {
     $.ajax({
-      type: "",
-      url: "api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
-      dataType: "json",
+      method: "GET",
+      url: "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         // overwrite any existing content with title and empty row
 
@@ -88,17 +89,28 @@ $(document).ready(function() {
 
   function getUVIndex(lat, lon) {
     $.ajax({
-      type: "",
-      url: "api.openweathermap.org/data/2.5/forecast?q=" + lat + "&lon=" + lon,
-      dataType: "json",
+      method: "GET",
+      url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         var uv = $("<p>").text("UV Index: ");
         var btn = $("<span>").addClass("btn btn-sm").text(data.value);
-        
+
         // change color depending on uv value
+        if (data.value < 2) {
+          var btn = $("<span>").addClass("btn btn-sm greenbtn").text(data.value);
+        } else if (2 <= data.value && data.value < 5) {
+          var btn = $("<span>").addClass("btn btn-sm yellowbtn").text(data.value);
+        } else if (5 <= data.value && data.value < 7) {
+          var btn = $("<span>").addClass("btn btn-sm orangebtn").text(data.value);
+        } else if (7 <= data.value && data.value < 10) {
+          var btn = $("<span>").addClass("btn btn-sm redbtn").text(data.value);
+        } else if (10 <= data.value) {
+          var btn = $("<span>").addClass("btn btn-sm violetbtn").text(data.value);
+        }
         
-        $("#today .card-body").append(uv.append(btn));
-      }
+        $("#today .UVbutton").append(uv.append(btn));
+        console.log(data.value);
+      } 
     });
   }
 
@@ -122,3 +134,6 @@ var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 
 today = mm + '/' + dd + '/' + yyyy;
+
+// //variable for producing weather icon based off of current conditions
+
