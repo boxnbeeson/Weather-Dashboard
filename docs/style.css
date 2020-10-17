@@ -17,3 +17,14 @@
 .violetbtn {
     background-color: violet;
 }
+
+.card-body {
+    max-width: 200px;
+    background-color: rgb(255, 0, 191);
+    color: white;
+    margin: .4em;
+}
+
+.card-row {
+    display: flex;
+}
