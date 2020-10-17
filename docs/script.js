@@ -25,7 +25,7 @@ $(document).ready(function() {
   function searchWeather(cityName) {
     $.ajax({
       method: "GET",
-      url: "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
+      url: "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         // create history link for this search
         if (history.indexOf(cityName.toLowerCase()) === -1) {
@@ -59,7 +59,7 @@ $(document).ready(function() {
         getUVIndex(data.coord.lat, data.coord.lon);
         console.log(JSON.stringify(data.weather[0].main));
         console.log(JSON.stringify(data));
-        var weatherIcon = "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
+        var weatherIcon = "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png";
         console.log(weatherIcon);
         console.log(data.weather[0].icon);
       }
@@ -69,7 +69,7 @@ $(document).ready(function() {
   function getForecast(cityName) {
     $.ajax({
       method: "GET",
-      url: "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
+      url: "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         // overwrite any existing content with title and empty row
 
@@ -90,7 +90,7 @@ $(document).ready(function() {
   function getUVIndex(lat, lon) {
     $.ajax({
       method: "GET",
-      url: "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
+      url: "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         var uv = $("<p>").text("UV Index: ");
         var btn = $("<span>").addClass("btn btn-sm").text(data.value);
