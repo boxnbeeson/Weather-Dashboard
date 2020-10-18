@@ -68,10 +68,11 @@ $(document).ready(function() {
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=aa4b8fd43ea8bc685207d57d98c4ad7d",
       success: function(data) {
         // overwrite any existing content with title and empty row
-        $("#forecast").val('');
+        $("#forecast").empty();
         var title = $("<h4>").text("5 Day Forecast:");
         var createRow = $("<div>").attr("class", "row").attr("id", "card-row forecast2");
         $("#forecast").append(title, createRow);
+        $("#forecast2").val('');
         // loop over all forecasts (by 3-hour increments)
         for (var i = 0; i < data.list.length; i++) {
           // only look at forecasts around 3:00pm
