@@ -20,11 +20,16 @@
 
 .card-body {
     max-width: 200px;
-    background-color: rgb(255, 0, 191);
+    background-color: rgb(75, 122, 111);
     color: white;
-    margin: .4em;
+    margin: .3em;
 }
 
-.card-row {
-    display: flex;
+#card-row {
+    margin-left: 2%;
 }
+
+.bg {
+    background-color: #515355;
+}
+

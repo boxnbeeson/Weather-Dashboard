@@ -70,30 +70,26 @@ $(document).ready(function() {
         // overwrite any existing content with title and empty row
         $("#forecast").empty();
         var title = $("<h4>").text("5 Day Forecast:");
-        var createRow = $("<div>").attr("class", "row").attr("id", "card-row forecast2");
+        var createRow = $("<div>").attr("class", "row").attr("id", "card-row");
+        var createCard = $("<div>").attr("class", "card").attr("id", "card-body forecast2");
         $("#forecast").append(title, createRow);
-        $("#forecast2").val('');
+        // $("#forecast2").val('');
         // loop over all forecasts (by 3-hour increments)
         for (var i = 0; i < data.list.length; i++) {
           // only look at forecasts around 3:00pm
-          if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {;
+          if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
             // create html elements for a bootstrap card
             // merge together and put on page
-            $("#forecast2").html(
-              '<div class="card-body">' + 
-              "<h3>" + data.list[i].dt_txt + "</h3>" + 
-              "<p>" +
-              "Temperature: " + data.list[i].main.temp + "&#8457;" +
-              "</p>" +
-              "<p>" +
-              "Humidity: " + data.list[i].main.humidity + "%" +
-              "</p>" +
-              "<p>" +
-              "Wind Speed: " + data.list[i].wind.speed + "MPH" +
-              "</p>" +
-              "</div>" +
-              "</div>"
-            );
+            var weatherIcon = "https://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png";
+            console.log(data.list.length);
+            var createCard = $("<div>").attr("class", "card-body");
+            var dates = $("<h3>").html(data.list[i].dt_txt);
+            var weatherPic = $("<img>").attr("src", weatherIcon);
+            var temperature = $("<p>").html("Temp: " + data.list[i].main.temp + "℉");
+            var humidity = $("<p>").html("Humidity: " + data.list[i].main.humidity + "%");
+            var windSpeed = $("<p>").html("Wind Speed: " + data.list[i].wind.speed + "MPH");
+            createCard.append(dates, weatherPic, temperature, humidity, windSpeed);
+            $("#card-row").append(createCard);
           }
         }
       }
@@ -110,15 +106,15 @@ $(document).ready(function() {
 
         // change color depending on uv value
         if (data.value < 2) {
-          var btn = $("<span>").addClass("btn btn-sm greenbtn").text(data.value);
+          btn.addClass('greenbtn');
         } else if (2 <= data.value && data.value < 5) {
-          var btn = $("<span>").addClass("btn btn-sm yellowbtn").text(data.value);
+          btn.addClass('yellowbtn');
         } else if (5 <= data.value && data.value < 7) {
-          var btn = $("<span>").addClass("btn btn-sm orangebtn").text(data.value);
+          btn.addClass('orangebtn');
         } else if (7 <= data.value && data.value < 10) {
-          var btn = $("<span>").addClass("btn btn-sm redbtn").text(data.value);
+          btn.addClass('redbtn');
         } else if (10 <= data.value) {
-          var btn = $("<span>").addClass("btn btn-sm violetbtn").text(data.value);
+          btn.addClass('violetbtn');
         }
         
         $("#today .UVbutton").append(uv.append(btn));
