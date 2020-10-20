@@ -20,7 +20,7 @@
 
 .card-body {
     max-width: 200px;
-    background-color: rgb(75, 122, 111);
+    background-color: #5f6163;
     color: white;
     margin: .3em;
 }
@@ -30,6 +30,6 @@
 }
 
 .bg {
-    background-color: #515355;
+    background-color: #5f6163;
 }
 
