@@ -1,7 +1,7 @@
 # Weather Dashboard
   This weather application allows the user to search for a city and find it's current weather and subsequent five-day forecast. The cities searched will be kept in the history list on the left side of the screen, which may be cleared by using the "Clear History" button. Upon clicking on one of the history options, the page will be updated to show the weather for that specific city. 
   <br>
-  https://jpbeeson.github.io/Weather-Dashboard/
+  https://boxnbeeson.github.io/Weather-Dashboard/
   ## Table of Contents
   * [Demo](#demo)
   * [Developer's Information](#devInfo)
@@ -16,9 +16,9 @@
   <br>
   Name: Jacob Beeson
   <br>
-  Github Link: github.com/jpbeeson
+  Github Link: github.com/boxnbeeson
   <br>
-  Email: <beeson.jp@gmail.com>
+  Email: <boxnbeeson@gmail.com>
   
   ## <a name="license"></a>License
   MIT
