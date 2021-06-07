@@ -5,7 +5,6 @@
   ## Table of Contents
   * [Demo](#demo)
   * [Developer's Information](#devInfo)
-  * [Credientials](#credientials)
   * [License](#license)
   
   ## <a name="demo"></a>Demo
